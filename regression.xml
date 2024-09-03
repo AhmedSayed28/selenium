@@ -3,7 +3,7 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/Users/ahmed/IdeaProjects/Heraj">
         <classes>
-            <class name="tests.CreatePost">
+            <class name="tests.HomeTest">
                 <methods>
                     <include name="createPost"/>
                 </methods>

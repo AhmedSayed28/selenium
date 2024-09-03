@@ -7,6 +7,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
@@ -65,8 +66,6 @@ public class TestBase {
         reporter = new ExtentSparkReporter("Reports/extent-report.html");
         extent.attachReporter(reporter);
 
-        logger = extent.createTest("Haraj");
-
         // Initialize the WebDriver instance
         WebDriverManager.chromedriver().clearDriverCache().setup();
         driver = new ChromeDriver();
@@ -75,8 +74,7 @@ public class TestBase {
         options.setCapability("browserVersion","126.0.6478.126");
         driver.manage().window().maximize();
         if (executeBeforeMethod) {
-            driver.get("https://haraj.com.sa/");
-            logger.pass("Home page loaded successfully");
+            driver.get("https://stg.wakeb.tech/en");
         }
     }
 
