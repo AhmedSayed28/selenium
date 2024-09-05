@@ -5,33 +5,43 @@ import org.testng.annotations.Test;
 import pages.InternApplyNowForm;
 import pages.NavBar;
 
-public class InternApplyNowTest extends TestBase{
-    InternApplyNowForm apply;
-    NavBar nav;
-    Faker fake = new Faker();
+public class InternApplyNowTest extends TestBase {
 
-    String fullName = fake.name().fullName();
-    String email = fake.internet().safeEmailAddress();
-    String phone = String.valueOf(fake.number().numberBetween(1000000,99999999));
-    String gender = "Male";
-    String address = fake.address().fullAddress();
-    String degAndYear = fake.educator().course() + ", " + fake.number().numberBetween(1900, 2024);
+    private InternApplyNowForm applyForm;
+    private NavBar navBar;
+    private final Faker faker = new Faker();
+
+    // Test data generated using Faker
+    private final String fullName = faker.name().fullName();
+    private final String email = faker.internet().safeEmailAddress();
+    private final String phone = String.valueOf(faker.number().numberBetween(1000000, 99999999));
+    private final String address = faker.address().fullAddress();
+    private final String degreeAndYear = faker.educator().course() + ", " + faker.number().numberBetween(1900, 2024);
+
     @Test
-    public void InternApplyNowForm() throws InterruptedException {
-        logger = extent.createTest("Verify Inter can apply successfully");
-        apply = new InternApplyNowForm(driver);
-        nav = new NavBar(driver);
+    public void testInternApplyNowForm() throws InterruptedException {
+        logger = extent.createTest("Verify Intern can apply successfully");
 
-        nav.navigateToApplyNowPage();
-        apply.InternApplyPhaseOne(fullName,email,address,gender,phone,degAndYear);
-        reporter("pass","The step one has been completed successfully");
+        // Initialize page objects
+        applyForm = new InternApplyNowForm(driver);
+        navBar = new NavBar(driver);
 
-        apply.InternApplyPhaseTwo("frontEnd");
-        reporter("pass","The step Two has been completed successfully");
+        // Navigate to the "Apply Now" page
+        navBar.navigateToApplyNowPage();
 
-        apply.InternApplyPhaseThree("C:\\Users\\qaahm\\Downloads\\test.pdf","This is notes");
+        // Fill out phase one of the form
+        String gender = "Male";
+        applyForm.fillPhaseOne(fullName, email, address, gender, phone, degreeAndYear);
+        reporter("pass", "The first step has been completed successfully");
+
+        // Fill out phase two of the form
+        applyForm.fillPhaseTwo("Frontend Developer");
+        reporter("pass", "The second step has been completed successfully");
+
+        // Fill out phase three of the form and upload a test file
+        applyForm.fillPhaseThree("C:\\Users\\qaahm\\Downloads\\test.pdf", "This is a note for the application.");
         Thread.sleep(1000);
-        reporter("pass","Intern has been Applied successfully");
+        reporter("pass", "Intern application has been submitted successfully");
 
     }
 }

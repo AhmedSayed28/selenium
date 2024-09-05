@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -63,8 +64,9 @@ public class NavBar extends Base {
     // Method to navigate to the Apply Now page
     public void navigateToApplyNowPage() {
         click(careerPageLinkLocator);
-        scrollToPosition(0, 1500);
-        click(applyNowPageLinkLocator);
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", driver.findElement(applyNowPageLinkLocator));
         waitForLoaderToDisappear();
     }
 
@@ -79,4 +81,10 @@ public class NavBar extends Base {
         By loaderLocator = By.cssSelector("img[class=\" loader-logo loader-logo-gif\"]");
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loaderLocator));
     }
+
+    private void scrollToElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
 }
