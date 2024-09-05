@@ -60,8 +60,6 @@ public class Base {
     protected void click(By byLoc) {
         WebElement webElement = waitUntilElementToBeClickable(byLoc);
         for (int i = 0; i < 10; i++) {
-
-
             try {
                 webElement.click();
                 break;
@@ -72,7 +70,6 @@ public class Base {
                     throw new RuntimeException(ex);
                 }
             }
-
         }
     }
 
