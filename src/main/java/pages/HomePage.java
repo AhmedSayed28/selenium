@@ -8,7 +8,7 @@ import java.time.Duration;
 public class HomePage extends Base {
 
     // Locators for various elements on the home page
-    private final By loaderLocator = By.cssSelector("img[class=\" loader-logo loader-logo-gif\"]");
+    public final By loaderLocator = By.cssSelector("img[class=\" loader-logo loader-logo-gif\"]");
     private final By localizationLocator = By.cssSelector("ul[class=\"d-flex gap-3 align-items-center mb-0 p-0\"] a[title=\"language\"] span");
     private final By aboutSectionLocator = By.cssSelector("section[id=\"about\"]");
     private final By subsNewsletterEmailInputLocator = By.cssSelector("input[id=\"subscribe_email\"]");

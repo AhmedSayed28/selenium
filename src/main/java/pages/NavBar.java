@@ -3,22 +3,15 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 
 public class NavBar extends Base {
 
-    public NavBar(WebDriver driver) {
-        super(driver);
-    }
+    private final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    HomePage home;
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-
+    // Locators for navigation bar links
     private final By aboutPageLinkLocator = By.cssSelector("div[id=\"nav-content\"] a[href=\"https://stg.wakeb.tech/about-us\"]");
     private final By solutionsPageLinkLocator = By.cssSelector("div[id=\"nav-content\"] a[href=\"https://stg.wakeb.tech/solutions-and-services\"]");
     private final By useCasePageLinkLocator = By.cssSelector("div[id=\"nav-content\"] a[href=\"https://stg.wakeb.tech/use-cases\"]");
@@ -27,53 +20,63 @@ public class NavBar extends Base {
     private final By contactUsPageLinkLocator = By.cssSelector("div[id=\"nav-content\"] a[href=\"https://stg.wakeb.tech/contact\"]");
     private final By applyNowPageLinkLocator = By.cssSelector("button[class=\"btn btn-solid-main navbar-button\"]");
 
-    // methods
+    public NavBar(WebDriver driver) {
+        super(driver);
+    }
 
+    // Method to navigate to the About page
     public void navigateToAboutPage() {
         click(aboutPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
+    // Method to navigate to the Solutions page
     public void navigateToSolutionsPage() {
         click(solutionsPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
+    // Method to navigate to the Use Case page
     public void navigateToUseCasePage() {
         click(useCasePageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
+    // Method to navigate to the Blog page
     public void navigateToBlogPage() {
         click(blogPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
+    // Method to navigate to the Careers page
     public void navigateToCareerPage() {
         click(careerPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
+    // Method to navigate to the Contact Us page
     public void navigateToContactUsPage() {
         click(contactUsPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
     }
 
-    public void navigateToApplyNowPage() throws InterruptedException {
+    // Method to navigate to the Apply Now page
+    public void navigateToApplyNowPage() {
         click(careerPageLinkLocator);
-//        Actions act = new Actions(driver);
-//        act.scrollToElement(driver.findElement(By.cssSelector("footer[id=\"footer\"]")));
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("scrollTo(0,1500)");
-        Thread.sleep(1000);
+        scrollToPosition(0, 1500);
         click(applyNowPageLinkLocator);
-        home = new HomePage(driver);
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(home.loaderLocator)));
+        waitForLoaderToDisappear();
+    }
+
+    // Helper method to scroll to a specific position on the page
+    private void scrollToPosition(int x, int y) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(arguments[0], arguments[1]);", x, y);
+    }
+
+    // Helper method to wait until the loader disappears
+    private void waitForLoaderToDisappear() {
+        By loaderLocator = By.cssSelector("img[class=\" loader-logo loader-logo-gif\"]");
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loaderLocator));
     }
 }

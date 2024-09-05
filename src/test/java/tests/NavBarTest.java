@@ -5,27 +5,31 @@ import pages.NavBar;
 
 public class NavBarTest extends TestBase {
 
-    NavBar nav;
+    private NavBar nav;
 
     @Test
-    public void NavOnPages() throws InterruptedException {
-        logger = extent.createTest("Verify User can Navigate on all website pages");
+    public void testNavigationOnPages() throws InterruptedException {
+        logger = extent.createTest("Verify User can navigate on all website pages");
         nav = new NavBar(driver);
 
+        // Navigate to the About page
         nav.navigateToAboutPage();
-        reporter("pass","User Navigated to about us page successfully");
+        reporter("pass", "User navigated to About Us page successfully");
 
+        // Navigate to the Solutions page
         nav.navigateToSolutionsPage();
-        reporter("pass","User Navigated to Solutions page successfully");
+        reporter("pass", "User navigated to Solutions page successfully");
 
+        // Navigate to the Use Case page
         nav.navigateToUseCasePage();
-        reporter("pass","User Navigated to Use Case page successfully");
+        reporter("pass", "User navigated to Use Case page successfully");
 
+        // Navigate to the Blog page
         nav.navigateToBlogPage();
-        reporter("pass","User Navigated to Blog page successfully");
+        reporter("pass", "User navigated to Blog page successfully");
 
+        // Navigate to the Careers page
         nav.navigateToCareerPage();
-        reporter("pass","User Navigated to Careers page successfully");
-
+        reporter("pass", "User navigated to Careers page successfully");
     }
 }

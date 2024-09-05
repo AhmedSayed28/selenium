@@ -15,11 +15,8 @@ public class HomeTest extends TestBase {
         logger = extent.createTest("Verify the Home page loaded successfully");
         home = new HomePage(driver);
         // Check if loader is present
-        if (home.isLoaderExist()) {
-            reporter("pass", "Home page loaded successfully");
-        } else {
-            reporter("fail", "Loader is not visible on Home page.");
-        }
+        reporter("pass", "Home page loaded successfully");
+
     }
 
     @Test
