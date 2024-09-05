@@ -1,16 +1,9 @@
 package tests;
 
 import com.github.javafaker.Faker;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.HomePage;
-
-import java.time.Duration;
-import java.util.Objects;
 
 public class HomeTest extends TestBase {
     HomePage home;
@@ -18,49 +11,57 @@ public class HomeTest extends TestBase {
     Faker fake = new Faker();
 
     @Test
-    public void Loader() throws InterruptedException {
+    public void testLoader() throws InterruptedException {
         logger = extent.createTest("Verify the Home page loaded successfully");
         home = new HomePage(driver);
-        Thread.sleep(1000);
-        reporter("pass", "Home page loaded successfully");
+        // Check if loader is present
+        if (home.isLoaderExist()) {
+            reporter("pass", "Home page loaded successfully");
+        } else {
+            reporter("fail", "Loader is not visible on Home page.");
+        }
     }
 
     @Test
-    public void Localization() throws InterruptedException {
+    public void testLocalization() throws InterruptedException {
         logger = extent.createTest("Verify that user can switch the language");
         home = new HomePage(driver);
-        home.SwitchLanguage();
-        Thread.sleep(2000);
-        if (Objects.equals(driver.getCurrentUrl(), "https://stg.wakeb.tech/ar")) {
-            reporter("pass", "Language Switched successfully");
+        home.switchLanguage();
+        // Verify if the language switch is successful
+        if (driver.getCurrentUrl().contains("/ar")) {
+            reporter("pass", "Language switched successfully");
         } else {
-            reporter("fail", "Language doesn't Switched !!!!");
+            reporter("fail", "Language did not switch!");
         }
     }
 
     @Test
-    public void AboutSection() throws InterruptedException {
-        logger = extent.createTest("Verify About Section is exist and visible");
+    public void testAboutSection() throws InterruptedException {
+        logger = extent.createTest("Verify About Section exists and is visible");
         home = new HomePage(driver);
-        if (home.IsWebsiteSectionsExist()) {
-            reporter("pass", "Website Sections are exist and visible successfully");
+        // Check if the About section is present
+        if (home.isWebsiteSectionsExist()) {
+            reporter("pass", "Website sections are visible successfully");
         } else {
-            reporter("fail", "Website Sections aren't exist and visible !!!!");
+            reporter("fail", "Website sections are not visible!");
         }
     }
 
     @Test
-    public void SubscribeNews() throws InterruptedException {
-        logger = extent.createTest("Verify User can subscribe newsletter");
+    public void testSubscribeNews() throws InterruptedException {
+        logger = extent.createTest("Verify User can subscribe to the newsletter");
         home = new HomePage(driver);
-        home.SubscribeNewsletter(fake.internet().safeEmailAddress());
-        soft.assertEquals(home.GetSubscribeNewsletterSuccessMsg(), "You have Subscribed successfully");
-        if (Objects.equals(home.GetSubscribeNewsletterSuccessMsg(), "You have Subscribed successfully")) {
-            reporter("pass", "User can subscribe newsletter successfully");
+        // Subscribe with a fake email
+        String email = fake.internet().safeEmailAddress();
+        home.subscribeNewsletter(email);
+        String successMessage = home.getSubscribeNewsletterSuccessMsg();
+        // Validate the success message
+        soft.assertEquals(successMessage, "You have Subscribed successfully", "Subscription message mismatch!");
+        if ("You have Subscribed successfully".equals(successMessage)) {
+            reporter("pass", "User subscribed to newsletter successfully");
         } else {
-            reporter("fail", "User can't subscribe newsletter !!!!");
+            reporter("fail", "User failed to subscribe to newsletter!");
         }
-
         soft.assertAll();
     }
 }
